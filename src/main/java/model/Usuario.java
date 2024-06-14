@@ -1,7 +1,7 @@
 package model;
 
 public class Usuario {
-	private int id;
+	private long id;
     private String nome;
     private String login;
     private String senha;
@@ -24,7 +24,7 @@ public class Usuario {
         return id;
     }
  
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

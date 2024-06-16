@@ -4,10 +4,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="./css/styles.css" />
+
 <title>Autenticação de Usuários</title>
 </head>
 <body>
+<%@ include file="home.jsp" %>
 	<div>
+	<h1>Logar usuário</h1>
+	<p>Preencha o formulário para se autenticar.</p>
 		<form>
 			<div>
 				<label><strong>Login:</strong></label>

@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
 import model.Usuario;
 import factory.ConnectionFactory;
 
@@ -61,6 +63,44 @@ public class UsuarioDAO {
             if(conn != null) conn.close();
         }
         return null;
+    }
+    
+    public static ArrayList<Usuario> lerTodosUsuarios () throws SQLException {
+    	String sql = "SELECT * FROM usuarios";
+        Connection conn = null;
+        PreparedStatement pstm = null;
+        ResultSet res = null;
+        
+        ArrayList<Usuario> usuarios = new ArrayList<>();
+        try {
+        	conn = ConnectionFactory.createConnection();
+        	pstm = conn.prepareStatement(sql);
+        	res = pstm.executeQuery();
+        	
+        	while (res.next()) {
+        		Usuario usuario = new Usuario();
+        		
+        		usuario.setId(res.getLong("id"));
+        		usuario.setNome(res.getString("nome"));
+    			usuario.setLogin(res.getString("login"));
+    			usuario.setSenha(res.getString("senha"));
+    			
+    			usuarios.add(usuario);
+        	}
+        } catch (Exception e) {
+        	e.printStackTrace();
+        }  finally {
+    		if (pstm != null) {
+    			pstm.close();
+    		}
+    		if(conn != null) {
+    			conn.close();
+    		}
+    		if(res != null) {
+    			res.close();
+    		}
+        }
+        return usuarios;
     }
     
     public static boolean autenticar(String login, String senha) throws SQLException {

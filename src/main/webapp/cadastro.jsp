@@ -4,10 +4,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Autenticação de Usuários</title>
+<link rel="stylesheet" href="./css/styles.css" />
+<title>Cadastro de Usuários</title>
 </head>
 <body>
+<%@ include file="home.jsp" %>
 	<div>
+	<h1>Cadastrar usuário</h1>
+	<p>Preencha o formulário para começar.</p>
 		<form>
 			<div>
 				<label><strong>Nome completo:</strong></label>

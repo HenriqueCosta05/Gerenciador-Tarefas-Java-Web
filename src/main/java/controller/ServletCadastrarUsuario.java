@@ -36,7 +36,7 @@ public class ServletCadastrarUsuario extends HttpServlet {
 		//mostra página com mensagem
 		response.getWriter().append("\n Dados cadastrados com sucesso ");
 		//direciona para home
-		//response.sendRedirect("home.jsp");
+		response.sendRedirect("home.jsp");
 	}
 
 	/**

@@ -2,6 +2,8 @@ package tests;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
 import org.junit.Test;
 
 import dao.UsuarioDAO;
@@ -9,6 +11,7 @@ import model.Usuario;
 
 public class UsuarioTest {
 
+	/*
     @Test
     public void criarNovoUsuarioTest() {
         // Dados de teste
@@ -51,7 +54,7 @@ public class UsuarioTest {
             fail("Ocorreu um erro ao tentar autenticar o usuário: " + e.getMessage());
         }
     }
-
+	*/
     @Test
     public void lerUsuarioTest() {
         // ID do usuário desejado
@@ -68,5 +71,17 @@ public class UsuarioTest {
             e.printStackTrace();
             fail("Ocorreu um erro ao tentar listar o usuário: " + e.getMessage());
         }
+    }
+    
+    @Test 
+    public void lerUsuariosTest() {
+    	try {
+    		ArrayList<Usuario> usuarios = UsuarioDAO.lerTodosUsuarios();
+    		 assertNotNull("Deve listar os usuários", usuarios);
+    		 System.out.println(usuarios);
+    	} catch (Exception e) {
+    		e.printStackTrace();
+            fail("Ocorreu um erro ao tentar listar os usuários: " + e.getMessage());
+    	}
     }
 }

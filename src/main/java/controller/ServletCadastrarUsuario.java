@@ -1,5 +1,6 @@
 package controller;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -48,22 +49,29 @@ public class ServletCadastrarUsuario extends HttpServlet {
 				request.setCharacterEncoding("UTF-8");		
 				response.setContentType("text/html;charset=UTF-8");
 				System.out.println("Servlet Cadastrar está funcionando");
-				String nome,login,senha;
+				String nome,login,senha, mensagem;
 				nome=request.getParameter("nome");
 				login=request.getParameter("login");
 				senha=request.getParameter("senha");
 				//Validações
-				if(nome!=null && !nome.isEmpty()) {
+				if(nome!=null && !nome.isEmpty() && !login.isEmpty() && !senha.isEmpty()) {
 				//adicionar ao banco de dados e salvar com id
 				try {
 					UsuarioDAO.insere(new Usuario(nome, login, senha));
+					mensagem = "Usuário cadastrado com sucesso! Faça o login para continuar!";
+					request.setAttribute("mensagem", mensagem);
+					RequestDispatcher dispatcher = request.getRequestDispatcher("cadastro.jsp");
+					dispatcher.forward(request, response);
 				} catch (SQLException e) {
 					
 					e.printStackTrace();
 				}
 				response.getWriter().append("\n Dados cadastrados com sucesso ");
 				} else {
-					response.getWriter().append("\n Erro. Campos vazios! ");
+					mensagem = "Preencha todos os campos para cadastrar seu usuário!";
+					request.setAttribute("mensagem", mensagem);
+					RequestDispatcher dispatcher = request.getRequestDispatcher("cadastro.jsp");
+					dispatcher.forward(request, response);
 				}
 		//doGet(request, response);
 	}

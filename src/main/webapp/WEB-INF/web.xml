@@ -17,7 +17,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>ServletCadastrarUsuario</servlet-name>
-    <url-pattern>/ServletCadastrarUsuario</url-pattern>
+    <url-pattern>/cadastrar</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
@@ -27,7 +27,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>ServletLogarUsuario</servlet-name>
-    <url-pattern>/ServletLogarUsuario</url-pattern>
+    <url-pattern>/login</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
@@ -37,7 +37,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>ServletCadastrarTarefa</servlet-name>
-    <url-pattern>/ServletCadastrarTarefa</url-pattern>
+    <url-pattern>/cadastrarTarefa</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
@@ -47,6 +47,6 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>ServletListarTarefas</servlet-name>
-    <url-pattern>/ServletListarTarefas</url-pattern>
+    <url-pattern>/listarTarefas</url-pattern>
   </servlet-mapping>
 </web-app>

@@ -12,14 +12,14 @@
 	<div>
 	<h1>Cadastrar usuário</h1>
 	<p>Preencha o formulário para começar.</p>
-		<form>
+		<form action="/GerenciadorTarefas/cadastrar" method="post">
 			<div>
 				<label><strong>Nome completo:</strong></label>
-				<input type="text" name="nome" />
+				<input type="text" name="nome" required/>
 			</div>
 			<div>
 				<label><strong>E-mail:</strong></label>
-				<input type="email" name="email" />
+				<input type="email" name="login" required/>
 			</div>
 			<div>
 				<label><strong>Senha:</strong></label>
@@ -30,6 +30,14 @@
 				<input id="btn" type="submit" name="btLogar" value="Cadastrar" />
 			</div>
 		</form>
+		<div>
+		<%
+			String mensagem = (String) request.getAttribute("mensagem");
+			if (mensagem != null) {
+				out.print(mensagem);
+			}
+		%>
+		</div>
 	</div>
 </body>
 </html>

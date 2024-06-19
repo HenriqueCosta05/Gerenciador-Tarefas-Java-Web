@@ -1,10 +1,10 @@
 package controller;
 
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import model.Tarefa;
 import model.Usuario;
 import dao.TarefaDAO;
@@ -27,17 +27,25 @@ public class ServletCadastrarTarefa extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            ArrayList<Usuario> usuarios = UsuarioDAO.lerTodosUsuarios();
-            if (usuarios != null) {
-                request.setAttribute("usuarios", usuarios);
-            } else {
-                request.setAttribute("erro", "Não há usuários cadastrados");
+            HttpSession session = request.getSession(false); // Recupera a sessão atual, não cria uma nova
+            if (session != null) {
+                long idUsuario = (long) session.getAttribute("usuarioId");
+                String nomeUsuario = (String) session.getAttribute("usuarioNome");
+
+                // Setando os parâmetros da sessão na request
+                request.setAttribute("usuarioId", idUsuario);
+                request.setAttribute("usuarioNome", nomeUsuario);
             }
+            
+            // Recupera a lista de usuários
+            ArrayList<Usuario> usuarios = UsuarioDAO.lerTodosUsuarios();
+            request.setAttribute("usuarios", usuarios);
+            
+            // Redireciona para a página de nova tarefa
             request.getRequestDispatcher("novaTarefa.jsp").forward(request, response);
         } catch (SQLException e) {
             e.printStackTrace();
-            request.setAttribute("erro", "Erro ao carregar usuários");
-            request.getRequestDispatcher("novaTarefa.jsp").forward(request, response);
+            response.getWriter().append("Erro ao carregar usuários");
         }
     }
 
@@ -50,21 +58,33 @@ public class ServletCadastrarTarefa extends HttpServlet {
         String descricao = request.getParameter("descricao");
         String dataFinal = request.getParameter("dataFinal");
         String status = request.getParameter("status");
-        String idUsuario = request.getParameter("usuarioId");
+        String idUsuarioStr = request.getParameter("usuarioId");
+        String mensagem = "";
 
         try {
-            int idUsuarioFormatado = Integer.valueOf(idUsuario);
+            // Verifica se o ID do usuário está presente e não é nulo
+            if (idUsuarioStr == null || idUsuarioStr.isEmpty()) {
+                throw new NumberFormatException("ID de usuário inválido");
+            }
+
+            long idUsuario = Long.parseLong(idUsuarioStr);
             Date dataFinalFormatada = new SimpleDateFormat("yyyy-MM-dd").parse(dataFinal);
 
-            if (!titulo.isEmpty()) {
-                TarefaDAO.insere(new Tarefa(titulo, dataFinalFormatada, descricao, status, idUsuarioFormatado));
-                response.getWriter().append("Dados cadastrados com sucesso");
+            if (!titulo.isEmpty() && !descricao.isEmpty() && !status.isEmpty()) {
+                TarefaDAO.insere(new Tarefa(titulo, dataFinalFormatada, descricao, status, idUsuario));
+                mensagem = "Tarefa cadastrada com sucesso!";
+                request.setAttribute("mensagem", mensagem);
             } else {
                 response.getWriter().append("Erro. Campos vazios!");
             }
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            mensagem = "Erro: ID de usuário inválido";
+            request.setAttribute("mensagem", mensagem);
         } catch (SQLException | ParseException e) {
             e.printStackTrace();
-            response.getWriter().append("Erro ao cadastrar tarefa");
+            mensagem = "Erro ao cadastrar tarefa";
+            request.setAttribute("mensagem", mensagem);
         }
         doGet(request, response);
     }

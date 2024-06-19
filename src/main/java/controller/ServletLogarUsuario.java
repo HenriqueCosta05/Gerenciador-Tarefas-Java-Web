@@ -21,7 +21,7 @@ public class ServletLogarUsuario extends HttpServlet {
         super();
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {    	
         response.sendRedirect("login.jsp");
     }
 
@@ -44,17 +44,15 @@ public class ServletLogarUsuario extends HttpServlet {
         try {
             Usuario usuario = UsuarioDAO.autenticar(login, senha);
             if (usuario != null) {
+            	//Seta o id e o nome de usuário para uso em outra servlet (Cadastrar e Listar Tarefas)
                 HttpSession session = request.getSession();
                 session.setAttribute("usuarioId", usuario.getId());
                 session.setAttribute("usuarioNome", usuario.getNome());
                 mensagem = "Usuário autenticado com sucesso!";
-                request.setAttribute("mensagem", mensagem);
-                response.sendRedirect("home.jsp");
-                return;
             } else {
                 mensagem = "Credenciais inválidas!";
-                request.setAttribute("mensagem", mensagem);
             }
+            request.setAttribute("mensagem", mensagem);
         } catch (SQLException e) {
             e.printStackTrace();
             mensagem = "Erro ao autenticar o usuário!";

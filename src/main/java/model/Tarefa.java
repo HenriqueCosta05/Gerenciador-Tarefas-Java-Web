@@ -8,7 +8,7 @@ public class Tarefa {
 	private Date dataFinal;
 	private String descricao;
 	private String status;
-	private int idUsuario; 
+	private long idUsuario; 
 	
 	public String getTitulo() {
 		return titulo;
@@ -69,13 +69,13 @@ public class Tarefa {
 
 
 
-	public int getIdUsuario() {
+	public long getIdUsuario() {
 		return idUsuario;
 	}
 
 
 
-	public void setIdUsuario(int idUsuario) {
+	public void setIdUsuario(long idUsuario) {
 		this.idUsuario = idUsuario;
 	}
 
@@ -91,7 +91,7 @@ public class Tarefa {
 	}
 
 
-	public Tarefa(String titulo, Date dataFinal, String descricao, String status, int idUsuario) {
+	public Tarefa(String titulo, Date dataFinal, String descricao, String status, long idUsuario) {
 		super();
 		this.titulo = titulo;
 		this.dataFinal = dataFinal;
@@ -99,6 +99,8 @@ public class Tarefa {
 		this.status = status;
 		this.idUsuario = idUsuario;
 	}
+	
+	
 	
 	public Tarefa() {
 		

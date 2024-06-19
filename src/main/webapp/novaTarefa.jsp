@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="model.Usuario" %>
+<%@ page import="jakarta.servlet.http.HttpSession" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,33 +8,54 @@
     <title>Nova Tarefa</title>
 </head>
 <body>
-    <%@ include file="home.jsp" %>
-    <div>
+<%@ include file="home.jsp" %>
+<div>
+    <h1>Nova tarefa</h1>
+    <p>Preencha o formulário abaixo para cadastrar uma nova tarefa.</p>
+    <form action="/GerenciadorTarefas/cadastrarTarefa" method="post">
         <div>
-            <h1>Nova tarefa</h1>
-            <p>Preencha o formulário abaixo para cadastrar uma nova tarefa.</p>
+            <label><strong>Título:</strong></label>
+            <input type="text" name="titulo" required/>
         </div>
-        <form action="/GerenciadorTarefas/novaTarefa" method="post">
-            <div>
-                <label for="titulo"><strong>Título:</strong></label>
-                <input type="text" id="titulo" name="titulo" required/>
-            </div>
-            <div>
-                <label for="dataFinal"><strong>Data Final:</strong></label>
-                <input type="date" id="dataFinal" name="dataFinal" required/>
-            </div>
-            <div>
-                <label for="descricao"><strong>Descrição:</strong></label>
-                <input type="text" id="descricao" name="descricao" required/>
-            </div>
-            <div>
-                <label for="status"><strong>Status:</strong></label>
-                <input type="text" id="status" name="status" required/>
-            </div>
-            <div>
-                <input id="btn" name="btnCriarTarefa" type="submit" value="Criar tarefa" />
-            </div>
-        </form>
+        <div>
+            <label><strong>Data Final:</strong></label>
+            <input type="date" name="dataFinal" required/>
+        </div>
+        <div>
+            <label><strong>Descrição:</strong></label>
+            <input type="text" name="descricao" required/>
+        </div>
+        <div>
+            <label><strong>Status:</strong></label>
+            <input type="text" name="status" required/>
+        </div>
+        <div>
+            <% 
+                HttpSession currentSession = request.getSession(false);
+                if (currentSession != null) {
+                    Long usuarioId = (Long) currentSession.getAttribute("usuarioId");
+                    if (usuarioId != null) {
+            %>
+                        <input type="hidden" name="usuarioId" value="<%= usuarioId %>" />
+            <% 
+                    } else {
+                        response.sendRedirect("erro.jsp");
+                    }
+                } else {
+                    response.sendRedirect("erro.jsp");
+                }
+            %>
+        </div>
+        <input id="btn" name="btnCriarTarefa" type="submit" value="Criar tarefa" />
+    </form>
+    <div>
+        <% 
+            String mensagem = (String) request.getAttribute("mensagem");
+            if (mensagem != null) {
+                out.print(mensagem);
+            }
+        %>
     </div>
+</div>
 </body>
 </html>

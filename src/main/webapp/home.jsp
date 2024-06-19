@@ -20,7 +20,7 @@
 				<a href="/GerenciadorTarefas/novaTarefa.jsp">Nova tarefa</a>
 			</li>
 			<li>
-				<a href="/GerenciadorTarefas/listarTarefas.jsp">Listar Tarefas</a>
+				<a href="/GerenciadorTarefas/listarTarefas">Listar Tarefas</a>
 				</li>
 		</ul>
 	</nav>

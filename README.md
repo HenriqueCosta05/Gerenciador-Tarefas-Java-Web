@@ -66,3 +66,27 @@ Os usuários, mediante autenticação prévia, poderão criar uma nova tarefa ac
 Na página de visualização, será possível visualizar as tarefas cadastradas pelos usuários em geral.
 
 Ao executar o projeto as funcionalidade acima citadas serão de fácil visualização e fácil execução.
+
+
+*Script SQL para configuração do Banco de Dados
+
+```SQL
+CREATE DATABASE gerenciamentotarefas;
+USE gerenciamentotarefas;
+
+CREATE TABLE usuarios (
+	  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    login VARCHAR(255) NOT NULL,
+    senha VARCHAR(255) NOT NULL
+);
+CREATE TABLE tarefas (
+	  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    idUsuario INT NOT NULL,
+    titulo VARCHAR(255) NOT NULL,
+	  descricao VARCHAR(255) NOT NULL,
+    dataFinal DATE NOT NULL,
+    status VARCHAR(255) NOT NULL,
+	  CONSTRAINT idUsuario FOREIGN KEY (idUsuario) REFERENCES usuarios(id)
+);
+```

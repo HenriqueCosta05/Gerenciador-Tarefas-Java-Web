@@ -67,8 +67,7 @@ Na página de visualização, será possível visualizar as tarefas cadastradas 
 
 Ao executar o projeto as funcionalidade acima citadas serão de fácil visualização e fácil execução.
 
-
-*Script SQL para configuração do Banco de Dados
+# Script SQL para configuração do Banco de Dados
 
 ```SQL
 CREATE DATABASE gerenciamentotarefas;
